@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
     }
     else if(strcmp(argv[1], "-R") == 0)
     {
-        printf("This is -R \n");
+       command_R(".");
     }
     else if(strcmp(argv[1], "-li") == 0 || strcmp(argv[1], "-il") == 0)
     {
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
     }
     else if(argv[1] == NULL)
     {
-        printf("Ohh yeah no arguments, I will deal with that\n");
+        printf("Ohh yeah no arguments :D :D :D \n");
     }
     else
     {

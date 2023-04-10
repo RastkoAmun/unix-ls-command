@@ -61,6 +61,13 @@ void getLengths(int* maxGrpLen, int* maxPwLen, int* maxSizeLen, int* maxINodeLen
   closedir(dir);
 }
 
+
+void command_blank(){
+  return;
+}
+
+
+
 //COMMAND FOR PRINTING -l ALONE
 void command_l(){
   getLengths(&maxGrpLen, &maxPwLen, &maxSizeLen, &maxINodeLen, &maxFileNameLen);
@@ -149,6 +156,32 @@ void command_il(){
     printf("%s", buffer);
     printf("  ");
     printf("%s\n", dp->d_name);
+  }
+  closedir(dir);
+}
+
+void command_R(char* path){
+  dir = opendir(".");
+
+  if (dir == NULL) {
+    perror("opendir");
+    return;
+  }
+  
+  while((dp = readdir(dir)) != NULL){
+    if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0){
+      continue;
+    }
+
+    printf("%s/%s\n", path, dp->d_name);
+
+    char subpath[1024];
+    snprintf(subpath, sizeof(subpath), "%s/%s", path, dp->d_name);
+    struct stat st;
+    if(lstat(subpath, &st) == 0 && S_ISDIR(st.st_mode)){
+      command_R(subpath);
+    }
+    // command_R(subpath);
   }
   closedir(dir);
 }

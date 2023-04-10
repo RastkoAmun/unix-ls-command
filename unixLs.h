@@ -28,3 +28,4 @@ void getLengths(int* maxGrpLen, int* maxPwLen, int* maxSizeLen, int* maxINodeLen
 void command_l();
 void command_i();
 void command_il();
+void command_R(char* path);
