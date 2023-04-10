@@ -15,12 +15,15 @@ static struct dirent *dp;
 static struct stat buf;
 
 static struct group *grp;
-static int grpLen = 0;
 static struct passwd *pw;
-static int pwLen = 0;
+static int maxGrpLen = 0;
+static int maxPwLen = 0;
+static int maxSizeLen = 0;
+static int maxFileNameLen = 0;
+static int maxINodeLen = 0;
 
 
 void print_permissions(mode_t mode);
-void getAndPrintGroup(gid_t grpNum);
-void getAndPrintUserName(uid_t uid);
-void getLengths();
+void getLengths(int* maxGrpLen, int* maxPwLen, int* maxSizeLen, int* maxINodeLen, int* maxFileNameLen);
+void command_l();
+void command_i();

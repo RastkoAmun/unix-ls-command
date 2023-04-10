@@ -12,45 +12,54 @@
 #include "unixLs.h"
 
 
-int main(){
+int main(int argc, char *argv[]){
+    
+    // printf("ARG is %d\n", *argv[1]);
+    // char input[10] = 
+    getLengths(&maxGrpLen, &maxPwLen, &maxSizeLen, &maxINodeLen, &maxFileNameLen);
+    printf("Lengths: %d %d %d %d %d", maxGrpLen, maxPwLen, maxSizeLen, maxFileNameLen, maxINodeLen);
 
-    getLengths(&grpLen, &pwLen);
+    printf("Number of arguments %d\n", argc);
 
-    dir = opendir(".");
-
-    printf("Lengths: %d %d\n\n", grpLen, pwLen);
-
-    while((dp = readdir(dir)) != NULL){
-        if(lstat(dp->d_name, &buf) < 0){
-            perror("lstat");
-            return 1;
-        }
-        
-        grp = getgrgid(buf.st_gid); 
-        pw = getpwuid(buf.st_uid);
-
-        // printf("NLINK: %ld\n\n", (long)((long)buf.st_nlink > 10));
-
-        print_permissions(buf.st_mode);
-        printf("%4ld",(long)buf.st_nlink);
-        printf("%*s", (grpLen + 2),  pw->pw_name);
-        printf("%*s", (pwLen + 2), grp->gr_name);
-
-        
-        printf("  ");
-        printf("%3lld", (long long) buf.st_size);
-        printf("  ");
-
-        printf("%ld", (long) buf.st_mtime);
-        printf("%s\n", dp->d_name);
-
-        // getAndPrintGroup(buf.st_gid);
-        // getAndPrintUserName(buf.st_uid);
+    if(strcmp(argv[1], "-l") == 0)
+    {
+        command_l();
     }
+    else if(strcmp(argv[1], "-i") == 0)
+    {
+        command_i();
+    }
+    else if(strcmp(argv[1], "-R") == 0)
+    {
+        printf("This is -R \n");
+    }
+    else if(strcmp(argv[1], "-li") == 0 || strcmp(argv[1], "-il") == 0)
+    {
+        printf("This is -il \n");
+    }
+    else if(strcmp(argv[1], "-lR") == 0 || strcmp(argv[1], "-Rl") == 0)
+    {
+        printf("This is -lR \n");
+    }
+    else if(strcmp(argv[1], "-iR") == 0 || strcmp(argv[1], "-Ri") == 0){
+        printf("This is -iR \n");
+    }
+    else if(strcmp(argv[1], "-liR") == 0 || strcmp(argv[1], "-lRi") == 0 || 
+        strcmp(argv[1], "-ilR") == 0 || strcmp(argv[1], "-iRl") == 0 ||
+        strcmp(argv[1], "-Ril") == 0 || strcmp(argv[1], "-Rli") == 0 )
+    {
+        printf("This is -ilR \n");
+    }
+    else if(argv[1] == NULL)
+    {
+        printf("Ohh yeah no arguments, I will deal with that\n");
+    }
+    else
+    {
+        printf("Sorry UnixLs doesn't understand your argument\n");
+    }
+    
 
-    closedir(dir);
     return 0;
 }
-
-
 
