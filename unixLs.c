@@ -116,3 +116,39 @@ void command_i(){
   }
   closedir(dir);
 }
+
+void command_il(){
+  getLengths(&maxGrpLen, &maxPwLen, &maxSizeLen, &maxINodeLen, &maxFileNameLen);
+  dir = opendir(".");
+  while((dp = readdir(dir)) != NULL){
+    if(lstat(dp->d_name, &buf) < 0){
+        perror("lstat");
+        return;
+    }
+    
+    //SETUP needed for printing everything correctly
+    grp = getgrgid(buf.st_gid); 
+    pw = getpwuid(buf.st_uid);
+    //Converting time
+    long time = (long) buf.st_mtime;
+    struct tm *timeinfo;
+    char buffer[80];
+    timeinfo = localtime(&time);
+    strftime(buffer, 80, "%b %d %Y %H:%M", timeinfo);
+
+    // ------------------------------------------------------
+
+    //Printing -l in correct format
+    printf("%*ld  ", (maxINodeLen + 2), buf.st_ino);
+    print_permissions(buf.st_mode);
+    printf("%4ld",(long)buf.st_nlink);
+    printf("%*s", (maxGrpLen + 2), pw->pw_name);
+    printf("%*s", (maxPwLen + 2), grp->gr_name);     
+    printf("%*lld", (maxSizeLen + 2), (long long)buf.st_size);
+    printf("  ");
+    printf("%s", buffer);
+    printf("  ");
+    printf("%s\n", dp->d_name);
+  }
+  closedir(dir);
+}

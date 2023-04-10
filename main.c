@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     }
     else if(strcmp(argv[1], "-li") == 0 || strcmp(argv[1], "-il") == 0)
     {
-        printf("This is -il \n");
+        command_il();
     }
     else if(strcmp(argv[1], "-lR") == 0 || strcmp(argv[1], "-Rl") == 0)
     {

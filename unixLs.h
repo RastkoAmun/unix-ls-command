@@ -27,3 +27,4 @@ void print_permissions(mode_t mode);
 void getLengths(int* maxGrpLen, int* maxPwLen, int* maxSizeLen, int* maxINodeLen, int* maxFileNameLen);
 void command_l();
 void command_i();
+void command_il();
