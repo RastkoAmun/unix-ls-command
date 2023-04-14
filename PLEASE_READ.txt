@@ -1,0 +1,8 @@
+My code is not complete.
+When you compile it will work only for current working direcotry, that is you can't specify path in a argument
+When calling call ./UnixLs
+
+My implementation for ls -l and ls -i is working.
+Also the combination of the two, ls -il or ls -li.
+However my -R is not working, but I had some code for it in a function called command_R()
+- I tried to do it, but it doesn't work properly, can you take a look and maybe I can get some partial marks for it

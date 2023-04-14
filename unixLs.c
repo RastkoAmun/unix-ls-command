@@ -63,10 +63,17 @@ void getLengths(int* maxGrpLen, int* maxPwLen, int* maxSizeLen, int* maxINodeLen
 
 
 void command_blank(){
-  return;
+  dir = opendir(".");
+  while((dp = readdir(dir)) != NULL){
+    if(lstat(dp->d_name, &buf) < 0){
+        perror("lstat");
+        return;
+    }
+    printf("  ");
+    printf("%s\n", dp->d_name);
+  }
+  closedir(dir);
 }
-
-
 
 //COMMAND FOR PRINTING -l ALONE
 void command_l(){
@@ -91,6 +98,7 @@ void command_l(){
     // ------------------------------------------------------
 
     //Printing -l in correct format
+    printf("  ");
     print_permissions(buf.st_mode);
     printf("%4ld",(long)buf.st_nlink);
     printf("%*s", (maxGrpLen + 2), pw->pw_name);
@@ -181,7 +189,7 @@ void command_R(char* path){
     if(lstat(subpath, &st) == 0 && S_ISDIR(st.st_mode)){
       command_R(subpath);
     }
-    // command_R(subpath);
+    command_R(subpath);
   }
   closedir(dir);
 }
